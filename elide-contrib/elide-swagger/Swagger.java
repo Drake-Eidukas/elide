@@ -2,6 +2,7 @@ package com.yahoo.elide.contrib.swagger;
 
 import com.google.gson.annotations.SerializedName;
 
+// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md
 enum Scheme {
     @SerializedName("wss")
     WSS, 
@@ -27,7 +28,8 @@ class Swagger {
     public Scheme[] schemes;
     public MimeType[] consumes;
     public MimeType[] produces;
-    // There's going to be a Paths type and a Path type. I'm just going by the spec.
+    // There's going to be a Paths type and a Path type. 
+    // I don't make the rules, I just follow them.
     public Paths paths;
     public Definitions definitions;
     // I haven't the slightest idea how we're to implement this. I think one could make the case that 
