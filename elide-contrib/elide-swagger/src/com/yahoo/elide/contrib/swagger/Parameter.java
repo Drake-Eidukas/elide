@@ -38,7 +38,7 @@ public class Parameter extends SwaggerComponent {
         if(in == Enums.Location.PATH)
         {
             boolean foundInPaths = true;
-            for(String s : Swagger.main.paths.getKeys())
+            for(String s : Swagger.main.paths.keySet())
             {
                 if(s.equals(name))
                     foundInPaths = true;
@@ -70,5 +70,6 @@ public class Parameter extends SwaggerComponent {
             if(minItems < 0 || minItems > maxItems || maxItems < 0)
                 return false;
         }
+        return true;
     }
 }
