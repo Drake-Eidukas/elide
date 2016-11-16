@@ -2,6 +2,7 @@ package com.yahoo.elide.contrib.swagger;
 
 import java.util.HashSet;
 import java.lang.IllegalArgumentException;
+import java.util.Arrays;
 
 public class Operation extends SwaggerComponent {
     private static HashSet<String> usedOperationIds = new HashSet<>();
@@ -38,6 +39,14 @@ public class Operation extends SwaggerComponent {
                     return false;
                 else
                     foundBody = true;
+        }
+
+        // I'm not 100% sure if this is right. I wrote a very specific comment calling for it, 
+        // but it doesn't really make sense to me, and I can't find it again in the spec. 
+        if(Arrays.stream(parameters).anyMatch(x -> x.type == Enums.Type.FILE))
+        {
+            if(!Arrays.stream(consumes).anyMatch(x -> x.toString().equals("multipart/form-data") || x.toString().equals("application/x-www-form-urlencoded")))
+                return false;
         }
         return true;
     }

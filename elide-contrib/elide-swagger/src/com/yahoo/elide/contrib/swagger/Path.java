@@ -22,10 +22,6 @@ public class Path extends SwaggerComponent {
             return false;
         if(Util.hasDuplicates(parameters))
             return false;
-
-
-
-
         return true;
     }
 }

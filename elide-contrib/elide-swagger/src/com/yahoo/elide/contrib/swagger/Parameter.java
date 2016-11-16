@@ -58,8 +58,6 @@ public class Parameter extends SwaggerComponent {
         {
             if(type == null)
                 return false;
-            // TODO: Implement something on the thing that governs this that makes sure that
-            // the consumes of that thing is either "multipart/form-data" or "application/x-www-form-urlencoded" or both if the type is "file"
             if(type == Enums.Type.ARRAY)
             {
                 if(items == null)

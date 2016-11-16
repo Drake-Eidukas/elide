@@ -3,7 +3,6 @@ package com.yahoo.elide.contrib.swagger;
 public class Schema extends SwaggerComponent {
     public static final String[] REQUIRED = {};
     public String title;
-    // TODO: Figure out what this is and validate for it.
     public String ref;
     public Enums.DataType format;
     public String description;

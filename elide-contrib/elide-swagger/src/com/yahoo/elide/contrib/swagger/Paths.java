@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.lang.IllegalArgumentException;
 
 public class Paths extends HashMap<String, Path> {
+
     @Override
     public Path put(String k, Path v)
     {
