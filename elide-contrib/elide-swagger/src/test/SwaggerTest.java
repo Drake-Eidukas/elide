@@ -34,7 +34,11 @@ public class SwaggerTest extends TestCase {
         s.paths = new Paths();
         s.checkRequired();
     }
-    public void testCheckAllRequired()
+    /*
+     * The point of this method is to make sure
+     * that the checkAllRequired() method goes all the way down the stack
+     */
+    public void testCheckAllRequired() throws SwaggerValidationException
     {
         Swagger s = new Swagger();
         try {
@@ -50,13 +54,50 @@ public class SwaggerTest extends TestCase {
             Swagger.checkAllRequired(s);
             fail("Something isn't working right; there should be an exception here");
         }
-        catch (RuntimeException e)
+        catch (SwaggerValidationException e)
         {
         }
         s.info.title = "Title";
         s.info.version = "15.52.1.5";
         Swagger.checkAllRequired(s);
+        s.info.contact = new Contact();
+        Swagger.checkAllRequired(s);
+        s.info.contact.name = "Dewey Finn";
+        s.info.contact.url = "the internet";
+        try {
+            Swagger.checkAllRequired(s);
+            fail("Something isn't working right; there should be an exception here");
+        }
+        catch (SwaggerValidationException e)
+        {
+        }
+        s.info.contact.url = "http://xkcd.com";
+        Swagger.checkAllRequired(s);
+        s.info.contact.email = "1600 Pennsylvania Avenue";
+        try {
+            Swagger.checkAllRequired(s);
+            fail("Something isn't working right; there should be an exception here");
+        }
+        catch (SwaggerValidationException e)
+        {
+        }
+        s.info.contact.email = "fred@television.tv";
+        Swagger.checkAllRequired(s);
 
+
+    }
+    public void testPathsRejectsBadPath() {
+        Paths paths = new Paths();
+        try {
+            paths.put("test", new Path());
+            fail("Something isn't working right; there should be an exception here");
+        }
+        catch (IllegalArgumentException e)
+        {}
+    }
+
+    public void testPathValidator() throws SwaggerValidationException
+    {
         Path dummyPath = new Path();
         dummyPath.checkRequired();
         dummyPath.ref = "apples";
@@ -90,11 +131,30 @@ public class SwaggerTest extends TestCase {
         }
         catch (SwaggerValidationException e)
         {}
-        s.paths.put("/test", dummyPath);
     }
-    public void testPathsRejectsBadPath() {
-        // TODO: Make sure that if you try to add a path to a paths that doesn't have the proper
-        // structure to its key (ie, it doesn't start with a slash), then the computer should 
-        // get mad.
+
+    public void testParameterValidator() throws SwaggerValidationException
+    {
+        Parameter p = new Parameter();
+        try {
+            p.checkRequired();
+            fail("Something isn't working right; there should be an exception here");
+        }
+        catch (SwaggerValidationException e)
+        {}
+        p.name = "This is a test name";
+        try {
+            p.checkRequired();
+            fail("Something isn't working right; there should be an exception here");
+        }
+        catch (SwaggerValidationException e)
+        {}
+        p.in = Enums.Location.BODY;
+        try {
+            p.checkRequired();
+            fail("Something isn't working right; there should be an exception here");
+        }
+        catch (SwaggerValidationException e)
+        {}
     }
 }
